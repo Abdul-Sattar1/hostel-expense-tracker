@@ -1,3 +1,4 @@
+
 const nodeEnv = process.env.NODE_ENV ?? 'development';
 
 export const env = {
@@ -9,7 +10,6 @@ export const env = {
   jwtSecret: process.env.JWT_SECRET,
   bcryptRounds: nodeEnv === 'test' ? 4 : 12,
   googleClientId: process.env.GOOGLE_CLIENT_ID,
-  // Public base URL used in emailed links. Render sets RENDER_EXTERNAL_URL automatically.
   appUrl: (process.env.APP_URL ?? process.env.RENDER_EXTERNAL_URL ?? process.env.CLIENT_ORIGIN ?? 'http://localhost:5173').replace(/\/$/, ''),
   mail: {
     host: process.env.SMTP_HOST,
@@ -18,6 +18,8 @@ export const env = {
     pass: process.env.SMTP_PASS,
     from: process.env.MAIL_FROM,
     brevoKey: process.env.BREVO_API_KEY,
+    resetTemplateId: Number(process.env.BREVO_RESET_TEMPLATE_ID) || 0,
+    emailChangeTemplateId: Number(process.env.BREVO_EMAIL_CHANGE_TEMPLATE_ID) || 0,
   },
   authRateLimit: Number(process.env.AUTH_RATE_LIMIT) || 10,
 };
