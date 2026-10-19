@@ -17,7 +17,11 @@ async function sendViaBrevo(to, subject, text) {
     body: JSON.stringify({ sender, to: [{ email: to }], subject, textContent: text }),
     signal: AbortSignal.timeout(10000),
   });
-  if (!res.ok) throw new Error(`Email provider rejected the request (HTTP ${res.status})`);
+  if (!res.ok) {
+  const details = await res.text();
+  console.error(`[email] Brevo rejected request (${res.status}): ${details}`);
+  throw new Error(`Email provider rejected the request (HTTP ${res.status})`);
+}
 }
 
 // Delivery order: Brevo API (BREVO_API_KEY), else any SMTP server (SMTP_*). With neither set nothing
