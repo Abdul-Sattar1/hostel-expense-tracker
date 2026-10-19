@@ -28,7 +28,7 @@ async function sendViaBrevo(to, subject, text) {
       subject,
       textContent: text,
     }),
-    signal: AbortSignal.timeout(10000),
+ signal: AbortSignal.timeout(25000),
   });
 
   const details = await res.text();
