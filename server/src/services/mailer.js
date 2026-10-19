@@ -25,7 +25,11 @@ async function sendViaBrevo(to, subject, text) {
 // locally; in production it throws so callers never claim an email was sent.
 async function deliver(to, subject, text, link) {
   const { host, port, user, pass, from, brevoKey } = env.mail;
-  if (brevoKey) return sendViaBrevo(to, subject, text);
+if (brevoKey) {
+  console.log('[email] Brevo API selected');
+  return sendViaBrevo(to, subject, text);
+}
+console.log('[email] Brevo key missing; checking SMTP');
   if (!host) {
     if (env.isProd) throw new Error('No email provider is configured');
     console.log(`[dev] No email provider configured. Link for ${to}: ${link}`);
